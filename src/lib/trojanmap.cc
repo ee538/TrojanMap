@@ -29,6 +29,8 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/videoio.hpp"
 
+
+#define very_max 999999.9999
 //-----------------------------------------------------
 // TODO (Students): You do not and should not change the following functions:
 //-----------------------------------------------------
@@ -528,7 +530,7 @@ std::pair<double, double> TrojanMap::GetPlotLocation(double lat, double lon) {
  * @return {double}         : latitude
  */
 double TrojanMap::GetLat(std::string id) {
-    return -1;
+    return data[id].lat;
 }
 
 
@@ -539,7 +541,7 @@ double TrojanMap::GetLat(std::string id) {
  * @return {double}         : longitude
  */
 double TrojanMap::GetLon(std::string id) { 
-    return -1;
+    return data[id].lon;
 }
 
 /**
@@ -549,7 +551,7 @@ double TrojanMap::GetLon(std::string id) {
  * @return {std::string}    : name
  */
 std::string TrojanMap::GetName(std::string id) { 
-    return "";
+    return data[id].name;
 }
 
 /**
@@ -559,7 +561,7 @@ std::string TrojanMap::GetName(std::string id) {
  * @return {std::vector<std::string>}  : neighbor ids
  */
 std::vector<std::string> TrojanMap::GetNeighborIDs(std::string id) {
-    return {};
+    return data[id].neighbors;
 }
 
 /**
@@ -595,6 +597,14 @@ double TrojanMap::CalculateDistance(const Node &a, const Node &b) {
  */
 double TrojanMap::CalculatePathLength(const std::vector<std::string> &path) {
   double sum = 0;
+  int j=1;
+  for(int i=0;i<path.size()-1;i++)
+  {
+    Node node1=data[path[i]];
+    Node node2=data[path[j]];
+    j++;
+    sum += CalculateDistance(node1,node2);
+  }
   return sum;
 }
 
@@ -607,6 +617,42 @@ double TrojanMap::CalculatePathLength(const std::vector<std::string> &path) {
  */
 std::vector<std::string> TrojanMap::Autocomplete(std::string name){
   std::vector<std::string> results;
+  std::map<std::string,Node>::iterator it;
+  std::string lower_letter="abcdefghijklmnopqrstuvwxyz";
+  std::string upper_letter="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  std::string lower_name=name;
+  for(int i=0;i<lower_name.length();i++)
+  {
+    std::string::size_type pos=upper_letter.find(lower_name[i]);
+    if(pos != std::string::npos)
+    {
+      lower_name[i]=lower_letter[pos];
+    }
+  }
+
+
+  for (it = data.begin();it != data.end();it++)
+  {
+    std::string node_name=GetName(it->first);
+    if(node_name=="")
+      continue;
+    std::string lower_node_name=node_name;
+   
+    for(int i=0;i<lower_node_name.length();i++)
+    {
+      std::string::size_type pos=upper_letter.find(lower_node_name[i]);
+      if(pos != std::string::npos)
+      {
+        lower_node_name[i]=lower_letter[pos];
+      }
+    }
+    std::string part_node_name=lower_node_name.substr(0,name.length());
+    if(part_node_name==lower_name)
+      results.push_back(node_name);
+
+
+
+  }
   return results;
 }
 
@@ -618,6 +664,14 @@ std::vector<std::string> TrojanMap::Autocomplete(std::string name){
  */
 std::pair<double, double> TrojanMap::GetPosition(std::string name) {
   std::pair<double, double> results(-1, -1);
+  std::map<std::string,Node>::iterator it;
+  for(it=data.begin();it !=data.end();it++)
+  {
+    if(it->second.name==name)
+    {
+      results=std::make_pair(it->second.lat,it->second.lon);
+    }
+  }
   return results;
 }
 
@@ -629,7 +683,12 @@ std::pair<double, double> TrojanMap::GetPosition(std::string name) {
  */
 Node TrojanMap::GetNode(std::string name) {
   Node n;
-  n.id = "";
+  std::map<std::string,Node>::iterator it;
+  for(it=data.begin();it !=data.end();it++)
+  {
+    if(it->second.name==name)
+      return it->second;
+  }
   return n;
 }
 
@@ -644,6 +703,115 @@ Node TrojanMap::GetNode(std::string name) {
 std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
     std::string location1_name, std::string location2_name) {
   std::vector<std::string> path;
+  std::vector<std::string> allNodes;
+  std::map<std::string,Node>::iterator it;
+  for(it=data.begin();it !=data.end();it++)
+  {
+    allNodes.push_back(it->first);
+  }
+
+  std::vector<int> visited(2237,0);
+  std::vector<int> previousNode(2237,-1);
+  std::vector<std::vector<double>> weight(2237,std::vector<double>(2237,0));
+  for(int i=0;i<2237;i++)
+  {
+    std::string start_node_id=allNodes[i];
+    std::vector<std::string> adjacents=data[start_node_id].neighbors;
+    for(int j=0;j<2237;j++)
+    {
+      std::string end_node_id=allNodes[j];
+      if(start_node_id==end_node_id)
+      {
+        weight[i][j]=0;
+        continue;
+      }
+      std::vector<std::string>::iterator it=std::find(adjacents.begin(),adjacents.end(),end_node_id);
+      if(it==adjacents.end())
+      {
+        weight[i][j]=very_max;
+        continue;
+      }
+      else
+      {
+        weight[i][j]=CalculateDistance(data[start_node_id],data[end_node_id]);
+      }
+
+    }
+  }
+  std::string start_id=GetNode(location1_name).id;
+  std::string end_id=GetNode(location2_name).id;
+  std::vector<std::string>::iterator start_it=std::find(allNodes.begin(),allNodes.end(),start_id);
+  int v0=start_it-allNodes.begin();
+  std::vector<std::string>::iterator end_it=std::find(allNodes.begin(),allNodes.end(),end_id);
+  int v1=end_it-allNodes.begin();
+  std::vector<double> dist(2237,0);
+  for(int i=0;i<2237;i++)
+  {
+    dist[i]=weight[v0][i];
+    if(weight[v0][i]<very_max)
+      previousNode[i]=v0;
+  }
+
+  visited[v0]=1;
+  previousNode[v0]=-1;
+  int v;
+  double min_cur;
+
+  /* lecture method 
+  std::unordered_set<int> isvisited;
+  isvisited.insert(v0);
+  while(isvisited.size()<2237)
+  {
+    int u;
+    int min=
+  }
+  */
+
+  
+  for(int i=0;i<2236;i++)
+  {
+     min_cur=very_max;
+     for(int j=0;j<2237;j++)
+     {
+       if(visited[j]==0&&dist[j]<min_cur)
+       {
+         v=j;
+         min_cur=dist[j];
+       }
+     }
+     visited[v]=1;
+     for(int j=0;j<2237;j++)
+     {
+       if(visited[j]==1)
+          continue;
+       if(dist[v]==very_max||weight[v][j]==very_max)
+          continue;
+       if(dist[v]+weight[v][j]<dist[j])
+       {
+         dist[j]=dist[v]+weight[v][j];
+         previousNode[j]=v;
+       }
+     }
+
+  }
+  
+
+
+  if(dist[v1]==very_max)
+    return path;
+  else
+  {
+    path.push_back(allNodes[v1]);
+    int previous_index=previousNode[v1];
+    while(previous_index !=-1)
+    {
+      path.push_back(allNodes[previous_index]);
+      previous_index=previousNode[previous_index];
+    }
+    std::reverse(path.begin(),path.end());
+    return path;
+
+  }
   return path;
 }
 

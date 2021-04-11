@@ -20,6 +20,7 @@ class Node {
         neighbors;  // List of the ids of all neighbor points.
 };
 
+
 class TrojanMap {
  public:
    // A map of ids to Nodes.
