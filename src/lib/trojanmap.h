@@ -128,7 +128,10 @@ class TrojanMap {
   // Given a subgraph specified by a square-shape area, determine whether there is a
   // cycle or not in this subgraph.
   // vector square has 4 elements: left/right/top/bottom bound in order.
+  bool IsCyclicUttil(std::string node_id, std::map<std::string,int> &isvisit,std::string parent_id,const std::vector<double> &square);
+
   bool CycleDetection(std::vector<double> &square);
+  
   
   //----------------------------------------------------- User-defined functions
 };

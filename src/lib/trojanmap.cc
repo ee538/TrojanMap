@@ -893,6 +893,42 @@ std::pair<double, std::vector<std::vector<std::string>>> TravellingTrojan_2opt(
  * @param {std::vector<double>} square: four vertexes of the square area
  * @return {bool}: whether there is a cycle or not
  */
+bool TrojanMap::IsCyclicUttil(std::string node_id, std::map<std::string,int> &isvisit,std::string parent_id,const std::vector<double> &square)
+{
+  isvisit[node_id]=1;
+  for(auto neighbor:data[node_id].neighbors)
+  {
+    if((data[neighbor].lon>=square[0])&&(data[neighbor].lon<=square[1])&&(data[neighbor].lat<=square[2])&&(data[neighbor].lat>=square[3]))
+    {
+      if((isvisit[neighbor]==1)&&(neighbor!=parent_id))
+            return true;
+
+      if(isvisit[neighbor]==0)   
+      {
+        if(IsCyclicUttil(neighbor,isvisit,node_id,square)==true)
+          return true;
+      }  
+    }
+    
+  }
+
+  return false;
+
+}
+
 bool TrojanMap::CycleDetection(std::vector<double> &square) {
+  std::map<std::string,int> isvisit;
+  std::map<std::string,Node>::iterator it;
+  for(it=data.begin();it !=data.end();it++)
+  {
+    if((it->second.lon>=square[0])&&(it->second.lon<=square[1])&&(it->second.lat<=square[2])&&(it->second.lat>=square[3]))
+    {
+      if(isvisit[it->first]==0)
+      {
+        if(IsCyclicUttil(it->first,isvisit," ",square)==true)
+          return true;
+      }
+    }
+  }
   return false;
 }
