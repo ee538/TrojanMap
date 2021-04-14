@@ -130,7 +130,7 @@ void TrojanMap::PrintMenu() {
     std::string input2;
     getline(std::cin, input2);
     auto start = std::chrono::high_resolution_clock::now();
-    auto results = CalculateShortestPath_Dijkstra(input1, input2);
+    auto results = CalculateShortestPath_Bellman_Ford(input1, input2);
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     menu = "*************************Results******************************\n";
@@ -826,6 +826,101 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
 std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(
     std::string location1_name, std::string location2_name){
   std::vector<std::string> path;
+  std::vector<std::string> allNodes;
+  std::map<std::string,Node>::iterator it;
+  for(it=data.begin();it !=data.end();it++)
+  {
+    allNodes.push_back(it->first);
+  }
+  
+  std::vector<std::vector<double>> weight(2237,std::vector<double>(2237,0));
+  for(int i=0;i<2237;i++)
+  {
+    std::string start_node_id=allNodes[i];
+    std::vector<std::string> adjacents=data[start_node_id].neighbors;
+    for(int j=0;j<2237;j++)
+    {
+      std::string end_node_id=allNodes[j];
+      if(start_node_id==end_node_id)
+      {
+        weight[i][j]=0;
+        continue;
+      }
+      std::vector<std::string>::iterator it=std::find(adjacents.begin(),adjacents.end(),end_node_id);
+      if(it==adjacents.end())
+      {
+        weight[i][j]=very_max;
+        continue;
+      }
+      else
+      {
+        weight[i][j]=CalculateDistance(data[start_node_id],data[end_node_id]);
+      }
+
+    }
+
+  }
+
+  std::string start_id=GetNode(location1_name).id;
+  std::string end_id=GetNode(location2_name).id;
+  std::vector<std::string>::iterator start_it=std::find(allNodes.begin(),allNodes.end(),start_id);
+  int v0=start_it-allNodes.begin();
+  std::vector<std::string>::iterator end_it=std::find(allNodes.begin(),allNodes.end(),end_id);
+  int v1=end_it-allNodes.begin();
+
+  
+
+  std::vector<std::vector<double>> d(2237,std::vector<double>(2237));
+  std::vector<int> previousNode(2237,-1);
+
+  for(int i=0;i<2237;i++)
+  {
+    
+    for(int v=0;v<2237;v++)
+    {
+        if(i==0)
+        {
+          d[0][v]= (v==v0) ? 0:very_max;
+          continue;
+        }
+        d[i][v]=very_max;
+        for(std::string u:data[allNodes[v]].neighbors)
+        {
+          std::vector<std::string>::iterator u_it=std::find(allNodes.begin(),allNodes.end(),u);
+          int u_id=u_it-allNodes.begin();
+          std::vector<double> comparelist={d[i][v],d[i-1][v],d[i-1][u_id]+weight[u_id][v]};
+          d[i][v]= *std::min_element(comparelist.begin(),comparelist.end());
+
+          
+          
+          if(d[i][v]==d[i-1][u_id]+weight[u_id][v])
+            previousNode[v]=u_id;
+        }
+
+    }
+   
+  }
+
+
+ 
+
+  if(d[2236][v1]==very_max)
+    return path;
+
+  else{
+    path.push_back(allNodes[v1]);
+    int previous_index=previousNode[v1];
+    while(previous_index !=-1)
+    {
+      path.push_back(allNodes[previous_index]);
+      previous_index=previousNode[previous_index];
+    }
+    std::reverse(path.begin(),path.end());
+    return path;
+  }
+  
+
+
   return path;
 }
 
