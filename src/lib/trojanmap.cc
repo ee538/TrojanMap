@@ -924,6 +924,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(
   return path;
 }
 
+//Step6 DAG
 /**
  * Given CSV filename, it read and parse locations data from CSV file,
  * and return locations vector for topological sort problem.
@@ -933,6 +934,16 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(
  */
 std::vector<std::string> TrojanMap::ReadLocationsFromCSVFile(std::string locations_filename){
   std::vector<std::string> location_names_from_csv;
+  
+  std::ifstream fin("/Users/xuyouwei/2021Spring_TrojanMap/input/topologicalsort_locations.csv"); 
+  std::string line; 
+  std::getline(fin,line);                //skip the first line
+  while (getline(fin, line)){            //line means the whole line data
+      line.erase(std::remove(line.begin(), line.end(), ','), line.end());
+      location_names_from_csv.push_back(line);
+  }
+  fin.close();
+
   return location_names_from_csv;
 }
 
@@ -945,6 +956,23 @@ std::vector<std::string> TrojanMap::ReadLocationsFromCSVFile(std::string locatio
  */
 std::vector<std::vector<std::string>> TrojanMap::ReadDependenciesFromCSVFile(std::string dependencies_filename){
   std::vector<std::vector<std::string>> dependencies_from_csv;
+  
+  std::ifstream fin("/Users/xuyouwei/2021Spring_TrojanMap/input/topologicalsort_dependencies.csv"); 
+  std::string line; 
+  std::getline(fin,line);                //skip the first line
+
+  while (getline(fin, line)){            //line means the whole line data
+    std::string data;
+    std::vector<std::string> csv_data;
+
+    std::istringstream sin(line); //the whole line
+    while (getline(sin, data, ',')){
+      csv_data.push_back(data);
+    }
+    dependencies_from_csv.push_back(csv_data);
+  }
+  fin.close();
+
   return dependencies_from_csv;
 }
 
