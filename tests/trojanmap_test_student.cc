@@ -153,4 +153,18 @@ TEST(TrojanMapTest, GetPosition) {
 //Test TravellingTrojan function
 //Test TravellingTrojan_2opt function
 //Test IsCyclicUttil funciton
-//Test CycleDetection function
+//Test CycleDetection functio
+TEST(TrojanMapTest, CycleDetection) {
+  TrojanMap m;
+  m.CreateGraphFromCSVFile();//data complete
+  
+  // Test case 1
+  std::vector<double> square1 = {-118.297, -118.277, 34.022, 34.0201};
+  bool real1 = m.CycleDetection(square1);
+  EXPECT_EQ(true, real1);
+
+  // Test case 2
+  std::vector<double> square2 = {-118.290919, -118.282911, 34.02335, 34.0197};
+  bool real2 = m.CycleDetection(square2);
+  EXPECT_EQ(false, real2);
+}
