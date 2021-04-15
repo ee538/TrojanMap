@@ -266,8 +266,12 @@ void TrojanMap::PrintMenu() {
     menu = "**************************************************************\n";
     std::cout << menu;
     std::cout << "Time taken by function: " << duration.count() << " microseconds" << std::endl << std::endl;
-    PlotPointsandEdges(cycle_locations,square);
-    cycle_locations.clear();
+    if (results == true){
+      PlotPointsandEdges(cycle_locations,square);
+      cycle_locations.clear();
+
+    }
+    
     PrintMenu();
     break;
   }
