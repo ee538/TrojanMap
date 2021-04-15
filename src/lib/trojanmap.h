@@ -25,6 +25,7 @@ class TrojanMap {
  public:
    // A map of ids to Nodes.
   std::map<std::string, Node> data;
+  std::vector<std::string> cycle_locations;
   
   //-----------------------------------------------------
   // TODO: You do not and should not change the following functions:
@@ -109,6 +110,8 @@ class TrojanMap {
 
   // Given a vector of location names, it should return a sorting of nodes
   // that satisfies the given dependencies.
+
+  void topo(std::string root,std::map<std::string,int> &marks,std::vector<std::string> &top_list, std::map<std::string,std::vector<std::string>> &edge_map);
   std::vector<std::string> DeliveringTrojan(std::vector<std::string> &location_names,
                                             std::vector<std::vector<std::string>> &dependencies);
 
@@ -118,17 +121,26 @@ class TrojanMap {
   // and the second member is the reordered vector of points.
   // (Notice that we don't find the optimal answer. You can return an estimated
   // path.)
+  void Permute_aux(std::vector<std::string> &nums,std::vector<std::vector<std::string>> &result,std::vector<std::string> curResult);
+
   std::pair<double, std::vector<std::vector<std::string>>> TravellingTrojan(
       std::vector<std::string> &location_ids);
 
-  
+  void swap_2Cal(std::vector<std::string> &init_path,int &counter,double &min_len,std::vector<std::vector<std::string>> &results);
+
+  void swap_3Cal(std::vector<std::string> &init_path,int &counter,double &min_len,std::vector<std::vector<std::string>> &results);
+
   std::pair<double, std::vector<std::vector<std::string>>> TravellingTrojan_2opt(
+      std::vector<std::string> &location_ids);
+    
+  std::pair<double, std::vector<std::vector<std::string>>> TravellingTrojan_3opt(
       std::vector<std::string> &location_ids);
 
   // Given a subgraph specified by a square-shape area, determine whether there is a
   // cycle or not in this subgraph.
   // vector square has 4 elements: left/right/top/bottom bound in order.
-  bool IsCyclicUttil(std::string node_id, std::map<std::string,int> &isvisit,std::string parent_id,const std::vector<double> &square);
+  bool IsCyclicUttil(std::string node_id, std::map<std::string,int> &isvisit,std::string parent_id,
+const std::vector<double> &square,std::map<std::string,std::string> &father);
 
   bool CycleDetection(std::vector<double> &square);
   
