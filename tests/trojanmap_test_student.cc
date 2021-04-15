@@ -147,22 +147,28 @@ TEST(TrojanMapTest, GetPosition) {
 
 //Test CalculateShortestPath_Dijkstra function
 //Test CalculateShortestPath_Bellman_Ford function
+
+/****STEP6 DAG****/
 //Test ReadLocationsFromCSVFile function
 //Test ReadDependenciesFromCSVFile function
-
 //Test Delivery function
 TEST(TrojanMapTest, TopologicalSort) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
-  std::vector<std::string> location_names = {"Cardinal Gardens", "Coffee Bean1","CVS"};
-  std::vector<std::vector<std::string>> dependencies = {{"Cardinal Gardens","Coffee Bean1"}, {"Cardinal Gardens","CVS"}, {"Coffee Bean1","CVS"}};
+  std::vector<std::string> location_names = {"Trojan Grounds Starbucks","Ralphs","CVS","ChickfilA","Trader Joe39s"};
+  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"","CVS"}, {"ChickfilA","Trojan Grounds Starbucks"},
+                                                        {"CVS","Trojan Grounds Starbucks"},{"Trojan Grounds Starbucks","Trader Joe39s"}};
   auto result = m.DeliveringTrojan(location_names, dependencies);
-  std::vector<std::string> gt ={"Cardinal Gardens", "Coffee Bean1","CVS"};
+  std::vector<std::string> gt ={"Ralphs", "chickfilA","CVS","Trojan Grounds Starbucks","Trader Joe39s"};
   EXPECT_EQ(result, gt);
 }
 
+
+/****STEP4 TSP****/
 //Test TravellingTrojan function
 //Test TravellingTrojan_2opt function
+
+/****STEP5 CYCLE****/
 //Test IsCyclicUttil funciton
 //Test CycleDetection functio
 TEST(TrojanMapTest, CycleDetection) {
