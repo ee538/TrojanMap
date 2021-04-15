@@ -156,7 +156,7 @@ TEST(TrojanMapTest, TopologicalSort) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
   std::vector<std::string> location_names = {"Trojan Grounds Starbucks","Ralphs","CVS","ChickfilA","Trader Joe39s"};
-  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"","CVS"}, {"ChickfilA","Trojan Grounds Starbucks"},
+  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"Ralphs","CVS"}, {"ChickfilA","Trojan Grounds Starbucks"},
                                                         {"CVS","Trojan Grounds Starbucks"},{"Trojan Grounds Starbucks","Trader Joe39s"}};
   auto result = m.DeliveringTrojan(location_names, dependencies);
   std::vector<std::string> gt ={"Ralphs", "chickfilA","CVS","Trojan Grounds Starbucks","Trader Joe39s"};
