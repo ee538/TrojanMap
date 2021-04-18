@@ -4,7 +4,7 @@
 #include "gtest/gtest.h"
 #include "src/lib/trojanmap.h"
 
-/*
+
 
 // Test Autocomplete function
 TEST(TrojanMapTest, Autocomplete) {
@@ -104,7 +104,7 @@ TEST(TrojanMapTest, CalculateShortestPath_Dijkstra2) {
   EXPECT_EQ(path, gt);
 }
 
-*/
+
 
 
 
@@ -174,7 +174,7 @@ TEST(TrojanMapTest, TSP3) {
 */
 
 
-/*
+
 // Test cycle detection function
 TEST(TrojanMapTest, CycleDetection) {
   TrojanMap m;
@@ -190,10 +190,10 @@ TEST(TrojanMapTest, CycleDetection) {
   EXPECT_EQ(result2, false);
 }
 
-*/
+
 
 // Test cycle detection function 
-/*
+
 TEST(TrojanMapTest, TopologicalSort) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
@@ -204,4 +204,3 @@ TEST(TrojanMapTest, TopologicalSort) {
   EXPECT_EQ(result, gt);
 }
 
-*/
