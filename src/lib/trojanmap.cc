@@ -1047,10 +1047,11 @@ std::vector<std::vector<std::string>> TrojanMap::ReadDependenciesFromCSVFile(std
  * @return {std::vector<std::string>} results                       : results
  */
 
+/*********WAY 1*********/
 void TrojanMap::topo(std::string root,std::map<std::string,int> &marks,std::vector<std::string> &top_list, std::map<std::string,std::vector<std::string>> &edge_map){
   marks[root]=1;
   std::vector<std::string> temp=edge_map[root];
-  for(const std::string child : temp)
+  for(const std::string &child : temp)
   {
       if(marks[child]!=1)
       {
@@ -1087,10 +1088,6 @@ std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &l
   
   std::string start_p=root[0];
   
-
-
-
-  
   std::map<std::string,std::vector<std::string>> edge_map;
   for(auto location:locations)
   {
@@ -1103,7 +1100,6 @@ std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &l
     }
   }
 
- 
   
   std::map<std::string,int> marks;
   topo(start_p,marks,result,edge_map);
@@ -1115,13 +1111,39 @@ std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &l
     return temp;
   }
 
-
-  
   return result;
 
-
-
 }
+
+/*********WAY 2*********/
+// std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &locations,
+//                                                      std::vector<std::vector<std::string>> &dependencies){
+// std::vector<std::string> result;
+// int size = locations.size();
+
+                                                  
+// while(result.size() != size){
+
+//   for(int i = 0;i < locations.size(); i++){
+
+//     if(std::find(result.begin(), result.end(), locations[i]) == result.end()){
+//       result.push_back(locations[i]);
+//     }
+//     else
+//       continue;
+
+//     for(int j = 0;j < dependencies.size(); j++){
+//       if(locations[i] == dependencies[j][1] && ( std::find(result.begin(), result.end(),dependencies[j][0]) == result.end() )){
+//         result.pop_back(); 
+//         break;
+//       }
+//     }
+//   }    
+
+// }  
+
+//   return result;                                                     
+// }
 
 /**
  * Travelling salesman problem: Given a list of locations, return the shortest

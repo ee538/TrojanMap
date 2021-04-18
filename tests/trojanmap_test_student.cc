@@ -26,6 +26,7 @@ TEST(TrojanMapStudentTest, GetLon) {
   EXPECT_EQ(expected, real);
 }
 
+
 //Test GetName function
 TEST(TrojanMapStudentTest, GetName) {
   TrojanMap m;
@@ -36,6 +37,7 @@ TEST(TrojanMapStudentTest, GetName) {
   std::string expected = "Trojan Grounds Starbucks";
   EXPECT_EQ(expected, real);
 }
+
 
 //Test GetNode function 
 TEST(TrojanMapStudentTest, GetNode) {
@@ -58,6 +60,7 @@ TEST(TrojanMapStudentTest, GetNode) {
   EXPECT_EQ(expneighbors,real.neighbors);  
 }
 
+
 //Test GetNeighborIDs function
 TEST(TrojanMapStudentTest, GetNeighborIDs) {
   TrojanMap m;
@@ -68,6 +71,7 @@ TEST(TrojanMapStudentTest, GetNeighborIDs) {
   std::vector<std::string>  expected = {"6226313827", "6814990112", "6226313826"};
   EXPECT_EQ(expected, real);
 }
+
 
 //Test CalculateDistance function
 TEST(TrojanMapStudentTest, CalculateDistance) {
@@ -109,6 +113,7 @@ TEST(TrojanMapStudentTest, CalculatePathLength) {
   EXPECT_EQ(exp, real);
 }
 
+
 //Test Autocomplete function
 TEST(TrojanMapTest, Autocomplete) {
   TrojanMap m;
@@ -129,48 +134,48 @@ TEST(TrojanMapTest, Autocomplete) {
 }
 
 
+
 //Test GetPosition function
 TEST(TrojanMapTest, GetPosition) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();//data complete
 
+  // Test case 1
   auto name1 = "Massman Theatre";
   std::pair<double, double> real_pair1 =  m.GetPosition(name1);
   std::pair<double, double> exp_pair1(34.0226664,-118.2899311);
   EXPECT_EQ(real_pair1, exp_pair1);
-
+  
+  // Test case 2
   auto name2 = "Crosswalk1";
   std::pair<double, double> real_pair2 =  m.GetPosition(name2);
   std::pair<double, double> exp_pair2(34.0302951,-118.2857237);
   EXPECT_EQ(real_pair2, exp_pair2); 
+
+  // Test case 3
+  auto name3 = "Astor Motel";
+  std::pair<double, double> real_pair3 =  m.GetPosition(name3);
+  std::pair<double, double> exp_pair3(34.024536,-118.2755802);
+  EXPECT_EQ(real_pair3, exp_pair3);  
 }
+
+
+
 
 //Test CalculateShortestPath_Dijkstra function
 //Test CalculateShortestPath_Bellman_Ford function
 
-/****STEP6 DAG****/
-//Test ReadLocationsFromCSVFile function
-//Test ReadDependenciesFromCSVFile function
-//Test Delivery function
-TEST(TrojanMapTest, TopologicalSort) {
-  TrojanMap m;
-  m.CreateGraphFromCSVFile();
-  std::vector<std::string> location_names = {"Trojan Grounds Starbucks","Ralphs","CVS","ChickfilA","Trader Joe39s"};
-  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"Ralphs","CVS"}, {"ChickfilA","Trojan Grounds Starbucks"},
-                                                        {"CVS","Trojan Grounds Starbucks"},{"Trojan Grounds Starbucks","Trader Joe39s"}};
-  auto result = m.DeliveringTrojan(location_names, dependencies);
-  std::vector<std::string> gt ={"Ralphs", "chickfilA","CVS","Trojan Grounds Starbucks","Trader Joe39s"};
-  EXPECT_EQ(result, gt);
-}
 
 
-/****STEP4 TSP****/
 //Test TravellingTrojan function
 //Test TravellingTrojan_2opt function
 
-/****STEP5 CYCLE****/
+
+
+
 //Test IsCyclicUttil funciton
-//Test CycleDetection functio
+//Test CycleDetection function 
+//{-118.299, -118.264, 34.032, 34.011}
 TEST(TrojanMapTest, CycleDetection) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();//data complete
@@ -181,7 +186,29 @@ TEST(TrojanMapTest, CycleDetection) {
   EXPECT_EQ(true, real1);
 
   // Test case 2
-  std::vector<double> square2 = {-118.290919, -118.282911, 34.02335, 34.0197};
+  std::vector<double> square2 = {-118.299, -118.277775, 34.032, 34.0291};
   bool real2 = m.CycleDetection(square2);
-  EXPECT_EQ(false, real2);
+  EXPECT_EQ(true, real2);
+
+  // Test case 3
+  std::vector<double> square3 = {-118.290919, -118.282911, 34.02335, 34.0197};
+  bool real3 = m.CycleDetection(square3);
+  EXPECT_EQ(false, real3);
+}
+
+
+
+
+//Test ReadLocationsFromCSVFile function
+//Test ReadDependenciesFromCSVFile function
+//Test DeliveringTrojan function
+TEST(TrojanMapTest, TopologicalSort) {
+  TrojanMap m;
+  m.CreateGraphFromCSVFile();
+  std::vector<std::string> location_names = {"Trojan Grounds Starbucks","Ralphs","CVS","ChickfilA","Trader Joe39s"};
+  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"Ralphs","CVS"}, {"ChickfilA","Trojan Grounds Starbucks"},
+                                                        {"CVS","Trojan Grounds Starbucks"},{"Trojan Grounds Starbucks","Trader Joe39s"}};
+  auto real = m.DeliveringTrojan(location_names, dependencies);
+  std::vector<std::string> exp ={"Ralphs", "CVS", "ChickfilA","Trojan Grounds Starbucks","Trader Joe39s"};
+  EXPECT_EQ(real, exp);
 }
