@@ -10,6 +10,7 @@
 #include <locale>
 #include <map>
 #include <unordered_map>
+#include <unordered_map>
 #include <unordered_set>
 #include <queue>
 #include <sstream>
@@ -30,7 +31,7 @@
 #include "opencv2/videoio.hpp"
 
 
-#define very_max 999999.9999
+#define very_max 9999.99
 //-----------------------------------------------------
 // TODO (Students): You do not and should not change the following functions:
 //-----------------------------------------------------
@@ -130,10 +131,10 @@ void TrojanMap::PrintMenu() {
     std::string input2;
     getline(std::cin, input2);
     auto start = std::chrono::high_resolution_clock::now();
-    auto results = CalculateShortestPath_Bellman_Ford(input1, input2);
+    auto results = CalculateShortestPath_Dijkstra(input1, input2);
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    menu = "*************************Results******************************\n";
+    menu = "*************************Dijkstra_Results******************************\n";
     std::cout << menu;
     if (results.size() != 0) {
       for (auto x : results) std::cout << x << std::endl;
@@ -146,6 +147,26 @@ void TrojanMap::PrintMenu() {
     menu = "**************************************************************\n";
     std::cout << menu;
     std::cout << "Time taken by function: " << duration.count() << " microseconds" << std::endl << std::endl;
+
+    // Bellmon Ford
+     start = std::chrono::high_resolution_clock::now();
+     results = CalculateShortestPath_Bellman_Ford(input1, input2);
+     stop = std::chrono::high_resolution_clock::now();
+     duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    menu = "*************************Bellman_Ford_Results******************************\n";
+    std::cout << menu;
+    if (results.size() != 0) {
+      for (auto x : results) std::cout << x << std::endl;
+      std::cout << "The distance of the path is:" << CalculatePathLength(results) << " miles" << std::endl;
+      
+    } else {
+      std::cout << "No route from the start point to the destination."
+                << std::endl;
+    }
+    menu = "**************************************************************\n";
+    std::cout << menu;
+    std::cout << "Time taken by function: " << duration.count() << " microseconds" << std::endl << std::endl;
+
     PrintMenu();
     break;
   }
@@ -905,12 +926,19 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(
   int v1=end_it-allNodes.begin();
 
   
-
-  std::vector<std::vector<double>> d(2237,std::vector<double>(2237));
-  std::vector<int> previousNode(2237,-1);
-
+  std::unordered_map<std::string,int> lookup;
+  
   for(int i=0;i<2237;i++)
   {
+    lookup[allNodes[i]]=i;
+    
+  }
+  std::vector<std::vector<double>> d(2236,std::vector<double>(2237));
+  std::vector<int> previousNode(2237,-1);
+
+  for(int i=0;i<2236;i++)
+  {
+    
     
     for(int v=0;v<2237;v++)
     {
@@ -922,8 +950,8 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(
         d[i][v]=very_max;
         for(std::string u:data[allNodes[v]].neighbors)
         {
-          std::vector<std::string>::iterator u_it=std::find(allNodes.begin(),allNodes.end(),u);
-          int u_id=u_it-allNodes.begin();
+          
+          int u_id=lookup[u];
           std::vector<double> comparelist={d[i][v],d[i-1][v],d[i-1][u_id]+weight[u_id][v]};
           d[i][v]= *std::min_element(comparelist.begin(),comparelist.end());
 
@@ -940,7 +968,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(
 
  
 
-  if(d[2236][v1]==very_max)
+  if(d[2235][v1]==very_max)
     return path;
 
   else{
@@ -1102,7 +1130,7 @@ std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &l
  * @param  {std::vector<std::string>} input : a list of locations needs to visit
  * @return {std::pair<double, std::vector<std::vector<std::string>>} : a pair of total distance and the all the progress to get final path
  */
-void TrojanMap::Permute_aux(std::vector<std::string> &nums,std::vector<std::vector<std::string>> &result,std::vector<std::string> curResult){
+void TrojanMap::Permute_aux(std::vector<std::string> &nums,std::vector<std::vector<std::string>> &result,std::vector<std::string> &curResult){
   if (curResult.size() == nums.size()) {
         result.push_back(curResult);
         return; 
@@ -1113,10 +1141,11 @@ void TrojanMap::Permute_aux(std::vector<std::string> &nums,std::vector<std::vect
                             continue; 
                             }
 // Update curResult
-              std::vector<std::string> nextCurResult = curResult;
-              nextCurResult.push_back(nums[i]);
+            
+              curResult.push_back(nums[i]);
 // Recursive DFS call
-            Permute_aux(nums, result, nextCurResult);
+            Permute_aux(nums, result, curResult);
+            curResult.pop_back();
   }
 }
 
@@ -1138,9 +1167,13 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravellingTr
   for(int i=0;i<paths[0].size()-1;i++)
   {
     min_len += CalculateDistance(data[paths[0][i]],data[paths[0][i+1]]);
+  
   }
   for(int i=1;i<paths.size();i++)
   {
+    
+     
+
     double temp=0;
     for(int j=0;j<paths[0].size()-1;j++)
     {
@@ -1154,6 +1187,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravellingTr
     }
   }
 
+  
   if(min_index != paths.size()-1)
   {
     std::vector<std::string> path_temp=paths[min_index];
@@ -1161,6 +1195,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravellingTr
     paths[paths.size()-1]=path_temp;
   }
 
+  
   results.first=min_len;
   results.second=paths;
 
@@ -1280,6 +1315,7 @@ std::vector<std::vector<std::string>> &results){
                     swap1_path[m]=node_n;
                     swap1_path[n]=node_p;
                     swap1_path[p]=node_m;
+                    temp_route=0;
                     for(int j=0;j<swap1_path.size()-1;j++)
                       {
                           temp_route += CalculateDistance(data[swap1_path[j]],data[swap1_path[j+1]]);

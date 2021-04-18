@@ -121,7 +121,7 @@ class TrojanMap {
   // and the second member is the reordered vector of points.
   // (Notice that we don't find the optimal answer. You can return an estimated
   // path.)
-  void Permute_aux(std::vector<std::string> &nums,std::vector<std::vector<std::string>> &result,std::vector<std::string> curResult);
+  void Permute_aux(std::vector<std::string> &nums,std::vector<std::vector<std::string>> &result,std::vector<std::string> &curResult);
 
   std::pair<double, std::vector<std::vector<std::string>>> TravellingTrojan(
       std::vector<std::string> &location_ids);
