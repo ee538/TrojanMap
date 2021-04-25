@@ -3,8 +3,8 @@
                         Name: Dongyu Ge, Youwei Xu
 
 ================================================================================
-
 ## Our README file includes the following sections:
+
 ```shell
 I. High-level overview of our design 
 II. Detailed description of each function and its time complexity.
@@ -12,7 +12,6 @@ III. Time spent for each function.
 IV. Discussion, conclusion, and lessons learned.
 ```
 
-================================================================================
 
 ## I. High-level overview of our design 
 
@@ -48,7 +47,6 @@ class Node {
 
 ```
 
-================================================================================
 
 ## II. Detailed description of each function and its time complexity
 1.STEP1:Autocomplete
@@ -92,13 +90,13 @@ bool TrojanMap::CycleDetection
 6.STEP6:Topological Sort
 We employ two methods. 
 
-================================================================================
+
 
 ## III. Time spent for each function
 
    
 
-================================================================================
+
 
 ## IV. Discussion, conclusion, and lessons learned
 
