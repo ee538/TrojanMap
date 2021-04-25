@@ -1,7 +1,9 @@
 
-                         EE599 C++ Project README
+=========================EE599 C++ Project README==============================
+                         
                         Name: Dongyu Ge, Youwei Xu
 
+===============================================================================
 ## Our README file includes the following sections:
 
 ```shell
@@ -88,7 +90,17 @@ bool TrojanMap::CycleDetection
 
 6.STEP6:Topological Sort
 We employ two methods. 
+```shell
+method 1:
+* input: a vector of location names ; output: nodes after topological sorting
+*
+*
 
+method 2:
+* input: a vector of location names ; output: nodes after topological sorting
+* traverse the dependencies vector and find the 
+*
+```
 
 
 ## III. Time spent for each function
