@@ -2,7 +2,6 @@
                          EE599 C++ Project README
                         Name: Dongyu Ge, Youwei Xu
 
-================================================================================
 ## Our README file includes the following sections:
 
 ```shell
@@ -101,7 +100,3 @@ We employ two methods.
 ## IV. Discussion, conclusion, and lessons learned
 
 We worked together to finish this C++ project finally. Not only has our programming ability improved further, but our understanding of algorithms, such as DFS, Bellman Ford and DAG, has also deepened. Since the thoughts about how to implememt these functions varies from person to person, thus the cooperation between us inspires some new thoughts and methods to deal with the same function, which is a motivative and excited process. This is a meaningful course for students who are prepared to become a programmar.
-
-================================================================================
-
-<EOF>
