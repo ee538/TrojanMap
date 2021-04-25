@@ -195,7 +195,7 @@ void TrojanMap::PrintMenu() {
     std::cout << "Calculating ..." << std::endl;
     auto start = std::chrono::high_resolution_clock::now();
     auto results = TravellingTrojan(locations);
-    auto results2= TravellingTrojan_2opt(locations);
+    
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     CreateAnimation(results.second);
@@ -216,6 +216,10 @@ void TrojanMap::PrintMenu() {
     std::cout << "Time taken by function: " << duration.count() << " microseconds" << std::endl << std::endl;
 
 
+     start = std::chrono::high_resolution_clock::now();
+     auto results2= TravellingTrojan_2opt(locations);
+     stop = std::chrono::high_resolution_clock::now();
+     duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
      menu = "***************************2-Opt Results***********************************\n";
      std::cout << menu;
      if (results2.second.size() != 0) {
@@ -227,9 +231,13 @@ void TrojanMap::PrintMenu() {
     } else {
       std::cout << "The size of the path is 0" << std::endl;
     }
+    std::cout << "Time taken by function: " << duration.count() << " microseconds" << std::endl << std::endl;
 
 
+    start = std::chrono::high_resolution_clock::now();
     auto results3=TravellingTrojan_3opt(locations);
+    stop = std::chrono::high_resolution_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     menu = "***************************3-Opt Results***********************************\n";
      std::cout << menu;
      if (results3.second.size() != 0) {
@@ -241,7 +249,7 @@ void TrojanMap::PrintMenu() {
     } else {
       std::cout << "The size of the path is 0" << std::endl;
     }
-
+    std::cout << "Time taken by function: " << duration.count() << " microseconds" << std::endl << std::endl;
 
     PrintMenu();
     break;
