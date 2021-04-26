@@ -331,8 +331,6 @@ TEST(TrojanMapTest, TSP2) {
 
 
 
-
-//Test IsCyclicUttil funciton
 //Test CycleDetection function 
 //{-118.299, -118.264, 34.032, 34.011}
 TEST(TrojanMapTest, CycleDetection) {
@@ -357,11 +355,8 @@ TEST(TrojanMapTest, CycleDetection) {
 
 
 
-
-//Test ReadLocationsFromCSVFile function
-//Test ReadDependenciesFromCSVFile function
 //Test DeliveringTrojan function
-TEST(TrojanMapTest, TopologicalSort) {
+TEST(TrojanMapTest, TopologicalSort1) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
   std::vector<std::string> location_names = {"Trojan Grounds Starbucks","Ralphs","CVS","ChickfilA","Trader Joe39s"};
@@ -377,9 +372,20 @@ TEST(TrojanMapTest, TopologicalSort2) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
   std::vector<std::string> location_names = {"Trojan Grounds Starbucks","Ralphs","CVS","ChickfilA","Trader Joe39s"};
-  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"Ralphs","Trader Joe39s"}, {"ChickfilA","Trojan Grounds Starbucks"},
+  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"Ralphs","Trader Joe39s"},
                                                         {"Trojan Grounds Starbucks","CVS"},{"Trojan Grounds Starbucks","ChickfilA"}};
-  auto result = m.DeliveringTrojan(location_names, dependencies);
-  std::vector<std::string> gt ={"Ralphs","Trader Joe39s","Trojan Grounds Starbucks","ChickfilA","CVS"};
-  EXPECT_EQ(result, gt);
+  auto real = m.DeliveringTrojan(location_names, dependencies);
+  std::vector<std::string> exp ={"Trojan Grounds Starbucks", "Ralphs", "CVS", "ChickfilA", "Trader Joe39s"};
+  EXPECT_EQ(real, exp);
+}
+
+// no topo sort
+TEST(TrojanMapTest, TopologicalSort3) {
+  TrojanMap m;
+  m.CreateGraphFromCSVFile();
+  std::vector<std::string> location_names = {"Ralphs","CVS","ChickfilA"};
+  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"ChickfilA","CVS"},{"CVS","Ralphs"}};
+  auto real = m.DeliveringTrojan(location_names, dependencies);
+  std::vector<std::string> exp ={};
+  EXPECT_EQ(real, exp);
 }

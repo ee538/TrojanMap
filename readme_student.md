@@ -76,7 +76,10 @@ We employ two methods, Dijkstra and Bellman Frod Algorithm to implement shortest
 ```shell
 Dijkstra:
 * input: 2 locations, one is start point and the other is destination; output: the shortest path which is a list of id
-* Get start and end node from point’s name;
+* put all nodes' id into 'allNodes' vector
+* create a 2237×2237 matrix 'weight', and the value of each blank represents distance between a pair of nodes. If one node is not the neighbour of the other node, we set the distance infinity.
+* 
+Get start and end node from point’s name;
 Create a min heap using priority queue with pair of <dist,id>;
 Use a map to save the shortest distance of each node;
 Set each node’s distance as infinite except start node and set start node’s distance as 0;
