@@ -770,14 +770,19 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
   std::vector<std::string> path;
   std::vector<std::string> allNodes;
   std::map<std::string,Node>::iterator it;
+  
+  // put all nodes' id into 'allNodes' vector
   for(it=data.begin();it !=data.end();it++)
   {
     allNodes.push_back(it->first);
   }
 
+  //create a 2237×2237 matrix 'weight', and the value of each blank represents distance between a pair of nodes. 
+  //If one node is not the neighbour of the other node, we set the distance 
   std::vector<int> visited(2237,0);
   std::vector<int> previousNode(2237,-1);
   std::vector<std::vector<double>> weight(2237,std::vector<double>(2237,0));
+
   for(int i=0;i<2237;i++)
   {
     std::string start_node_id=allNodes[i];
@@ -790,6 +795,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
         weight[i][j]=0;
         continue;
       }
+
       std::vector<std::string>::iterator it=std::find(adjacents.begin(),adjacents.end(),end_node_id);
       if(it==adjacents.end())
       {
@@ -803,6 +809,8 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
 
     }
   }
+  
+
   std::string start_id=GetNode(location1_name).id;
   std::string end_id=GetNode(location2_name).id;
   std::vector<std::string>::iterator start_it=std::find(allNodes.begin(),allNodes.end(),start_id);
@@ -1153,6 +1161,9 @@ std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &l
 //   return result;                                                     
 // }
 
+
+
+
 /**
  * Travelling salesman problem: Given a list of locations, return the shortest
  * path which visit all the places and back to the start point.
@@ -1437,6 +1448,7 @@ const std::vector<double> &square,std::map<std::string,std::string> &father)
   father[node_id]=parent_id;
   for(auto neighbor:data[node_id].neighbors)
   {
+
     if((data[neighbor].lon>=square[0])&&(data[neighbor].lon<=square[1])&&(data[neighbor].lat<=square[2])&&(data[neighbor].lat>=square[3]))
     {
       if((isvisit[neighbor]==1)&&(neighbor!=parent_id))
@@ -1453,13 +1465,13 @@ const std::vector<double> &square,std::map<std::string,std::string> &father)
         return true;
 
       }
-            
-
+      
       if(isvisit[neighbor]==0)   
       {
         if(IsCyclicUttil(neighbor,isvisit,node_id,square,father)==true)
           return true;
-      }  
+      } 
+
     }
     
   }

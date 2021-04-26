@@ -376,9 +376,10 @@ TEST(TrojanMapTest, TopologicalSort) {
 TEST(TrojanMapTest, TopologicalSort2) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
-  std::vector<std::string> location_names = {"Cardinal Gardens", "Coffee Bean1","CVS"};
-  std::vector<std::vector<std::string>> dependencies = {{"Cardinal Gardens","Coffee Bean1"}, {"Cardinal Gardens","CVS"}, {"Coffee Bean1","CVS"}};
+  std::vector<std::string> location_names = {"Trojan Grounds Starbucks","Ralphs","CVS","ChickfilA","Trader Joe39s"};
+  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"Ralphs","Trader Joe39s"}, {"ChickfilA","Trojan Grounds Starbucks"},
+                                                        {"Trojan Grounds Starbucks","CVS"},{"Trojan Grounds Starbucks","ChickfilA"}};
   auto result = m.DeliveringTrojan(location_names, dependencies);
-  std::vector<std::string> gt ={"Cardinal Gardens", "Coffee Bean1","CVS"};
+  std::vector<std::string> gt ={"Ralphs","Trader Joe39s","Trojan Grounds Starbucks","ChickfilA","CVS"};
   EXPECT_EQ(result, gt);
 }
