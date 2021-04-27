@@ -60,7 +60,7 @@ When the user chooses the number from 1 to 7, the application codes will excuate
 * if find the input name is the prefix of some node names, return the node names
 * if the input name does not correspond to any node name, return an empty vector
 
-* Time complexity:
+* Time complexity: O(n)
 ```
 
 
@@ -72,7 +72,7 @@ When the user chooses the number from 1 to 7, the application codes will excuate
 * if find a name is the same as the input name, return the location name's lat and lon
 * if the location name does not exist in the 'data' map, return (-1,-1)
 
-* Time complexity:
+* Time complexity: O(n)
 ```
 
 3.STEP3: CalculateShortestPath
@@ -84,14 +84,13 @@ Dijkstra:
 * input: 2 locations, one is start point and the other is destination; output: the shortest path which is a list of id
 * put all nodes' id into 'allNodes' vector
 * create a 2237×2237 matrix 'weight', and the value of each blank represents distance between a pair of nodes. If one node is not the neighbour of the other node, we set the distance infinity.
-* 
-Get start and end node from point’s name;
-Create a min heap using priority queue with pair of <dist,id>;
-Use a map to save the shortest distance of each node;
-Set each node’s distance as infinite except start node and set start node’s distance as 0;
-Use another map to save the predecessor of each node in order to build the path lately;
-Use bfs like while loop to update the shortest distance map and predecessor map;
-Use predecessor map to build the entire shortest path.
+* Get start and end node from point’s name;
+* Create a min heap using priority queue with pair of <dist,id>;
+* Use a map to save the shortest distance of each node;
+* Set each node’s distance as infinite except start node and set start node’s distance as 0;
+* Use another map to save the predecessor of each node in order to build the path lately;
+* Use bfs like while loop to update the shortest distance map and predecessor map;
+* Use predecessor map to build the entire shortest path.
 * Time complexity:
 
 Bellman Ford:
@@ -103,7 +102,13 @@ Bellman Ford:
 ```
 
 4.STEP4: Travelling salesman problem
+```shell
+* 
+* 
+* 
 
+* Time complexity:
+```
 
 5.STEP5: Cycle Detection
 In this section, we use two functions to complete cycle detection.
@@ -145,14 +150,19 @@ method 1:
 *
 *
 
+* Time complexity:
+```
+
+```shell
 method 2:
 * input: a vector of location names ; output: nodes after topological sorting
-* traverse nodes  and each time find if the node depends on other nodes（i.e. if it appears at the second position of each elements in 'dependencies' vector)
+* traverse nodes and each time find if the node depends on other nodes（i.e. if it appears at the second position of each elements in 'dependencies' vector)
 * if the node cannot depend on other node, then put it into the 'result' vector.
 * otherwise, keep traversing nodes in 'location' vector until all nodes have been put into the result
 * if there exist no topological sort, return an empty 'result' vector
 
-* Time complexity:
+* the size of 'data'= n and the size of 'dependency'= m
+Time complexity: O(mn)
 ```
 
 
@@ -174,7 +184,12 @@ We give a specific example and show the corresponding time spent by function bel
 3.STEP3: CalculateShortestPath   
 
 <p align="center"><img src="img/Step3.1.png" alt="Trojan" width="500" /></p>
-<p align="left"><img src="img/Step3.2.png" alt="Trojan" width="500" /></p><p align="right"><img src="img/Step3.3.png" alt="Trojan" width="500" /></p>
+<table>
+   <tr>
+       <td><p align="left"><img src="img/Step3.2.png" alt="Trojan" width="500" /></p></td>
+       <td><p align="right"><img src="img/Step3.3.png" alt="Trojan" width="500" /></p></td>
+   </tr></table>
+
 
 4.STEP4: Travelling salesman problem
 
