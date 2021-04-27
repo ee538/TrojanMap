@@ -157,19 +157,34 @@ method 2:
 
 
 ## III. Time spent for each function
-We give a specific example and show the corresponding time spent below.
+We give a specific example and show the corresponding time spent by function below here.
+
+
 1.STEP1: Autocomplete
+
 <p align="center"><img src="img/Step1.1.png" alt="Trojan" width="500" /></p>
 <p align="center"><img src="img/Step1.2.png" alt="Trojan" width="500" /></p>
 <p align="center"><img src="img/Step1.3.png" alt="Trojan" width="500" /></p>
+
 
 2.STEP2: Find the position
 
 <p align="center"><img src="img/Step2.png" alt="Trojan" width="500" /></p>
 
 3.STEP3: CalculateShortestPath   
+
+<p align="center"><img src="img/Step3.1.png" alt="Trojan" width="500" /></p>
+<p align="left"><img src="img/Step3.2.png" alt="Trojan" width="500" /></p>
+<p align="right"><img src="img/Step3.3.png" alt="Trojan" width="500" /></p>
+
 4.STEP4: Travelling salesman problem
+
+<p align="center"><img src="img/Step4.png" alt="Trojan" width="500" /></p>
+
 5.STEP5: Cycle Detection
+
+<p align="center"><img src="img/Step5.png" alt="Trojan" width="500" /></p>
+
 6.STEP6: Topological Sort
 
 <p align="center"><img src="img/Step6.png" alt="Trojan" width="500" /></p>
