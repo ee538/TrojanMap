@@ -1,6 +1,6 @@
 
 =========================EE599 C++ Project README================================
-========================Name: Dongyu Ge, Youwei Xu===============================
+========================Name: Dongyu Ge, Youwei Xu================================
 
 ## Our README file includes the following sections:
 

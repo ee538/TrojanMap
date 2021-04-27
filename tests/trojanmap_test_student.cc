@@ -163,94 +163,92 @@ TEST(TrojanMapTest, GetPosition) {
 
 
 //Test CalculateShortestPath_Dijkstra function
-TEST(TrojanMapTest, CalculateShortestPath_Dijkstra) {
+TEST(TrojanMapTest, CalculateShortestPath_Dijkstra1) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
-  // Test from Ralphs to ChickfilA
-  auto path = m.CalculateShortestPath_Dijkstra("Ralphs", "ChickfilA");
+  auto path = m.CalculateShortestPath_Dijkstra("Ground Zero", "CVS");
   std::vector<std::string> gt{
-      "2578244375", "5559640911", "6787470571", "6808093910", "6808093913", "6808093919", "6816831441",
-      "6813405269", "6816193784", "6389467806", "6816193783", "123178876", "2613117895", "122719259",
-      "2613117861", "6817230316", "3642819026", "6817230310", "7811699597", "5565967545", "123318572",
-      "6813405206", "6813379482", "544672028", "21306059", "6813379476", "6818390140", "63068610", 
-      "6818390143", "7434941012", "4015423966", "5690152766", "6813379440", "6813379466", "21306060",
-      "6813379469", "6813379427", "123005255", "6807200376", "6807200380", "6813379451", "6813379463",
-      "123327639", "6813379460", "4141790922", "4015423963", "1286136447", "1286136422", "4015423962",
-      "6813379494", "63068643", "6813379496", "123241977", "4015372479", "4015372477", "1732243576",
-      "6813379548", "4015372476", "4015372474", "4015372468", "4015372463", "6819179749", "1732243544",
-      "6813405275", "348121996", "348121864", "6813405280", "1472141024", "6813411590", "216155217", 
-      "6813411589", "1837212103", "1837212101", "6820935911", "4547476733"}; // Expected path
+      "4089614984","4015372469","1732243620","4015372475","4015372476","6813379548","1732243576",
+      "4015372477","4015372479","123241977","6813379496","63068643","5690152757","7930461034",
+      "4015372481","6813379534","4015372482","4015372483","5690152760","123241965","6813379501","3088548446"}; // Expected path
   // Print the path lengths
   std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
   std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
   EXPECT_EQ(path, gt);
-
-  path = m.CalculateShortestPath_Dijkstra("ChickfilA", "Ralphs");
-  std::reverse(gt.begin(),gt.end()); // Reverse the path
-
+  // Reverse the path
+  path = m.CalculateShortestPath_Dijkstra("CVS", "Ground Zero");
+  std::reverse(gt.begin(),gt.end()); 
   // Print the path lengths
   std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
   std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
   EXPECT_EQ(path, gt);
 }
 
-
-// Test CalculateShortestPath_Dijkstra function 2
 TEST(TrojanMapTest, CalculateShortestPath_Dijkstra2) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
-  auto path = m.CalculateShortestPath_Dijkstra("Target", "Popeyes Louisiana Kitchen");
-  // Test from Target to Popeyes Louisiana Kitchen
+  auto path = m.CalculateShortestPath_Dijkstra("ChickfilA", "USC Parking");
   std::vector<std::string> gt{
-      "5237417650", "6813379479", "5237381975", "4399698012", "4399698013", "4399698011", "4399698010", 
-      "123044712", "4399698009", "4399698008", "123005253", "6813379513", "6813379517", "6813379521", 
-      "123327627", "4399697999", "6813565290", "122719210", "6813379407", "2613117879", "6813379406", 
-      "6807905595", "6787803635", "2613117867", "4835551110", "6813565296", "122719205", "6813565294", "4835551232", 
-      "4835551104", "4012842272", "4835551103", "123178841", "6813565313", "122814435", "6813565311", "4835551228", 
-      "6813513565", "4835551090", "4835551081", "6813513564", "20400292", "5556117120", "5556117115", "4835551064", 
-      "4012842277", "6813565326", "123241961", "6813565322", "4835551070", "5695236164"}; // Expected path
-  // Print the path lengths
+    "4547476733","6820935911","1837212101","1837212103","6813411589","216155217","6813411590","1472141024","6813405280",
+    "348121864","348121996","6813405275","1732243544","6819179749","4015372463","4015372468","4015372474","4015372476",
+    "6813379548","1732243576","4015372477","4015372479","123241977","6813379496","63068643","5690152757","7930461034","4015372481",
+    "6813379534","4015372482","4015372483","5690152760","123241965","6813379501","6787803628","6285409682","6045067407"}; 
+
   std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
   std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
   EXPECT_EQ(path, gt);
   
-  // Reverse the input from Popeyes Louisiana Kitchen to Target
-  path = m.CalculateShortestPath_Dijkstra("Popeyes Louisiana Kitchen", "Target");
-  std::reverse(gt.begin(),gt.end()); // Reverse the path
+  path = m.CalculateShortestPath_Dijkstra("USC Parking", "ChickfilA");
+  std::reverse(gt.begin(),gt.end());
 
-  // Print the path lengths
+  std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
+  std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
+  EXPECT_EQ(path, gt);
+}
+
+TEST(TrojanMapTest, CalculateShortestPath_Dijkstra3) {
+  TrojanMap m;
+  m.CreateGraphFromCSVFile();
+  auto path = m.CalculateShortestPath_Dijkstra("Martin Luther King Jr Blvd  Coliseum", "John Adams Middle School");
+  std::vector<std::string> gt{
+      "269633667","6815813004","348123159","348123160","4020099351","348123342","4020099346","348123344","1870795193","122609808",
+      "4020099339","216153383","7396914904","1837206582","1837206579","122670276","6819170170","123254978","1732243580","4015477536","6820982894","21302782",
+      "6820982898","4012792178","1732243772","123254974","7211629026","7424313391","4012792179","63785567","4012792180","7867482499",
+      "21302781","1732340074","123254964","122719192","6817197856","358786623"}; 
+
+  std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
+  std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
+  EXPECT_EQ(path, gt);
+
+  path = m.CalculateShortestPath_Dijkstra("John Adams Middle School", "Martin Luther King Jr Blvd  Coliseum");
+  std::reverse(gt.begin(),gt.end()); 
+
   std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
   std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
   EXPECT_EQ(path, gt);
 }
 
 
-//Test CalculateShortestPath_Bellman_Ford function
 
-TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford) {
+
+
+
+//Test CalculateShortestPath_Bellman_Ford function
+TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford1) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
-  // Test from Ralphs to ChickfilA
-  auto path = m.CalculateShortestPath_Bellman_Ford("Ralphs", "ChickfilA");
+  auto path = m.CalculateShortestPath_Bellman_Ford("Ground Zero", "CVS");
   std::vector<std::string> gt{
-      "2578244375", "5559640911", "6787470571", "6808093910", "6808093913", "6808093919", "6816831441",
-      "6813405269", "6816193784", "6389467806", "6816193783", "123178876", "2613117895", "122719259",
-      "2613117861", "6817230316", "3642819026", "6817230310", "7811699597", "5565967545", "123318572",
-      "6813405206", "6813379482", "544672028", "21306059", "6813379476", "6818390140", "63068610", 
-      "6818390143", "7434941012", "4015423966", "5690152766", "6813379440", "6813379466", "21306060",
-      "6813379469", "6813379427", "123005255", "6807200376", "6807200380", "6813379451", "6813379463",
-      "123327639", "6813379460", "4141790922", "4015423963", "1286136447", "1286136422", "4015423962",
-      "6813379494", "63068643", "6813379496", "123241977", "4015372479", "4015372477", "1732243576",
-      "6813379548", "4015372476", "4015372474", "4015372468", "4015372463", "6819179749", "1732243544",
-      "6813405275", "348121996", "348121864", "6813405280", "1472141024", "6813411590", "216155217", 
-      "6813411589", "1837212103", "1837212101", "6820935911", "4547476733"}; // Expected path
+      "4089614984","4015372469","1732243620","4015372475","4015372476","6813379548","1732243576",
+      "4015372477","4015372479","123241977","6813379496","63068643","5690152757","7930461034",
+      "4015372481","6813379534","4015372482","4015372483","5690152760","123241965","6813379501","3088548446"}; // Expected path
   // Print the path lengths
   std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
   std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
   EXPECT_EQ(path, gt);
   
   // Reverse the input from Ralphs to ChickfilA
-  path = m.CalculateShortestPath_Bellman_Ford("ChickfilA", "Ralphs");
+  path = m.CalculateShortestPath_Bellman_Ford("CVS", "Ground Zero");
   std::reverse(gt.begin(),gt.end()); // Reverse the path
 
   // Print the path lengths
@@ -263,30 +261,45 @@ TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford) {
 TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford2) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
-  auto path = m.CalculateShortestPath_Bellman_Ford("Target", "Popeyes Louisiana Kitchen");
-  // Test from Target to Popeyes Louisiana Kitchen
+  auto path = m.CalculateShortestPath_Bellman_Ford("ChickfilA", "USC Parking");
   std::vector<std::string> gt{
-      "5237417650", "6813379479", "5237381975", "4399698012", "4399698013", "4399698011", "4399698010", 
-      "123044712", "4399698009", "4399698008", "123005253", "6813379513", "6813379517", "6813379521", 
-      "123327627", "4399697999", "6813565290", "122719210", "6813379407", "2613117879", "6813379406", 
-      "6807905595", "6787803635", "2613117867", "4835551110", "6813565296", "122719205", "6813565294", "4835551232", 
-      "4835551104", "4012842272", "4835551103", "123178841", "6813565313", "122814435", "6813565311", "4835551228", 
-      "6813513565", "4835551090", "4835551081", "6813513564", "20400292", "5556117120", "5556117115", "4835551064", 
-      "4012842277", "6813565326", "123241961", "6813565322", "4835551070", "5695236164"}; // Expected path
-  // Print the path lengths
+      "4547476733","6820935911","1837212101","1837212103","6813411589","216155217","6813411590","1472141024","6813405280",
+      "348121864","348121996","6813405275","1732243544","6819179749","4015372463","4015372468","4015372474","4015372476",
+      "6813379548","1732243576","4015372477","4015372479","123241977","6813379496","63068643","5690152757","7930461034","4015372481",
+      "6813379534","4015372482","4015372483","5690152760","123241965","6813379501","6787803628","6285409682","6045067407"}; 
   std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
   std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
   EXPECT_EQ(path, gt);
-  
-  // Reverse the input from Popeyes Louisiana Kitchen to Target
-  path = m.CalculateShortestPath_Bellman_Ford("Popeyes Louisiana Kitchen", "Target");
+
+  path = m.CalculateShortestPath_Bellman_Ford("USC Parking","ChickfilA");
   std::reverse(gt.begin(),gt.end()); // Reverse the path
 
-  // Print the path lengths
   std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
   std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
   EXPECT_EQ(path, gt);
 }
+
+TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford3) {
+  TrojanMap m;
+  m.CreateGraphFromCSVFile();
+  auto path = m.CalculateShortestPath_Bellman_Ford("Martin Luther King Jr Blvd  Coliseum", "John Adams Middle School");
+  std::vector<std::string> gt{
+      "269633667","6815813004","348123159","348123160","4020099351","348123342","4020099346","348123344","1870795193","122609808",
+      "4020099339","216153383","7396914904","1837206582","1837206579","122670276","6819170170","123254978","1732243580","4015477536","6820982894","21302782",
+      "6820982898","4012792178","1732243772","123254974","7211629026","7424313391","4012792179","63785567","4012792180","7867482499",
+      "21302781","1732340074","123254964","122719192","6817197856","358786623"}; 
+  std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
+  std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
+  EXPECT_EQ(path, gt);
+  path = m.CalculateShortestPath_Bellman_Ford("John Adams Middle School", "Martin Luther King Jr Blvd  Coliseum");
+  std::reverse(gt.begin(),gt.end()); 
+  std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
+  std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
+  EXPECT_EQ(path, gt);
+}
+
+
+
 
 
 //Test TravellingTrojan function
@@ -308,10 +321,24 @@ TEST(TrojanMapTest, TSP) {
   EXPECT_EQ(flag, true);
 }
 
-
-
-// Test TSP function 2
 TEST(TrojanMapTest, TSP2) {
+  TrojanMap m;
+  m.CreateGraphFromCSVFile();
+  std::vector<std::string> input{"1862312636", "7424270441", "67666219", "4015405548", "4015203110", "6807439002"}; // Input location ids 
+  auto result = m.TravellingTrojan(input);
+  std::cout << "My path length: " << result.first << "miles" << std::endl; // Print the result path lengths
+  std::vector<std::string> gt{"1862312636", "4015405548", "4015203110", "6807439002", "7424270441", "67666219", "1862312636"}; // Expected order
+  std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl; // Print the groundtruth path lengths
+  bool flag = false;
+  if (gt == result.second[result.second.size()-1]) // clockwise
+    flag = true;
+  std::reverse(gt.begin(),gt.end()); // Reverse the expected order because the counterclockwise result is also correct
+  if (gt == result.second[result.second.size()-1]) // counterclockwise
+    flag = true;
+  EXPECT_EQ(flag, true);
+}
+
+TEST(TrojanMapTest, TSP3) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
   std::vector<std::string> input{"1862312636", "7424270441", "67666219", "4015405548", "4015203110", "6807439002"}; // Input location ids 
@@ -331,8 +358,9 @@ TEST(TrojanMapTest, TSP2) {
 
 
 
-//Test CycleDetection function 
-//{-118.299, -118.264, 34.032, 34.011}
+
+
+//Test CycleDetection function {-118.299, -118.264, 34.032, 34.011}
 TEST(TrojanMapTest, CycleDetection) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();//data complete
@@ -355,7 +383,10 @@ TEST(TrojanMapTest, CycleDetection) {
 
 
 
+
+
 //Test DeliveringTrojan function
+//dependencies1
 TEST(TrojanMapTest, TopologicalSort1) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
@@ -367,7 +398,7 @@ TEST(TrojanMapTest, TopologicalSort1) {
   EXPECT_EQ(real, exp);
 }
 
-
+//dependencies2
 TEST(TrojanMapTest, TopologicalSort2) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();

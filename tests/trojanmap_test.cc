@@ -107,8 +107,6 @@ TEST(TrojanMapTest, CalculateShortestPath_Dijkstra2) {
 
 
 
-
-
 // Test TSP function
 TEST(TrojanMapTest, TSP) {
   TrojanMap m;
@@ -172,7 +170,6 @@ TEST(TrojanMapTest, TSP3) {
 }
 
 */
-
 
 
 // Test cycle detection function
