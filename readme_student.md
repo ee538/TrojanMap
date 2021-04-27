@@ -15,7 +15,7 @@ IV. Discussion, conclusion, and lessons learned.
 ## I. High-level overview of our design 
 
 This project builds a USC surroundings map application with using data structures in C++ and implementing various graph algorithms. The application has the following seven functionalities:
-
+<p align="center"><img src="img/TrojanMap.png" alt="Trojan" width="500" /></p>
 ```shell
 **************************************************************
 * Select the function you want to execute.
@@ -58,7 +58,10 @@ class Node {
 * compare the input name with the node names each time
 * if find the input name is the prefix of some node names, return the node names
 * if the input name does not correspond to any node name, return an empty vector
+
+* Time complexity:
 ```
+
 
 2.STEP2: Find the position
 
@@ -67,6 +70,8 @@ class Node {
 * traverse all nodes in 'data' map
 * if find a name is the same as the input name, return the location name's lat and lon
 * if the location name does not exist in the 'data' map, return (-1,-1)
+
+* Time complexity:
 ```
 
 3.STEP3: CalculateShortestPath
@@ -86,13 +91,14 @@ Set each node’s distance as infinite except start node and set start node’s 
 Use another map to save the predecessor of each node in order to build the path lately;
 Use bfs like while loop to update the shortest distance map and predecessor map;
 Use predecessor map to build the entire shortest path.
-
-*
+* Time complexity:
 
 Bellman Ford:
 * input: 2 locations, one is start point and the other is destination; output: the shortest path which is a list of id
 *
 *
+
+* Time complexity:
 ```
 
 4.STEP4: Travelling salesman problem
@@ -123,6 +129,8 @@ const std::vector<double> &square,std::map<std::string,std::string> &father)
 * use the 'father' map to plot the cycle
 * If the neighbor is in area and it unvisited, recursively do 'IsCyclicTttil' functiom. If the final recursive one return true, then means has cycle => return true
 * otherwise, that means no cycle => return false
+
+* Time complexity:O(n^2)
 ```
 
 
@@ -142,13 +150,30 @@ method 2:
 * if the node cannot depend on other node, then put it into the 'result' vector.
 * otherwise, keep traversing nodes in 'location' vector until all nodes have been put into the result
 * if there exist no topological sort, return an empty 'result' vector
+
+* Time complexity:
 ```
 
 
 ## III. Time spent for each function
+We give a specific example and show the corresponding time spent below.
+1.STEP1: Autocomplete
+<p align="center"><img src="img/Step1.1.png" alt="Trojan" width="500" /></p>
+<p align="center"><img src="img/Step1.2.png" alt="Trojan" width="500" /></p>
+<p align="center"><img src="img/Step1.3.png" alt="Trojan" width="500" /></p>
+```shell
 
-   
+```
+2.STEP2: Find the position
 
+<p align="center"><img src="img/Step2.png" alt="Trojan" width="500" /></p>
+
+3.STEP3: CalculateShortestPath   
+4.STEP4: Travelling salesman problem
+5.STEP5: Cycle Detection
+6.STEP6: Topological Sort
+
+<p align="center"><img src="img/Step6.png" alt="Trojan" width="500" /></p>
 
 
 ## IV. Discussion, conclusion, and lessons learned
