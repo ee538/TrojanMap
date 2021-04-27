@@ -174,8 +174,7 @@ We give a specific example and show the corresponding time spent by function bel
 3.STEP3: CalculateShortestPath   
 
 <p align="center"><img src="img/Step3.1.png" alt="Trojan" width="500" /></p>
-<p align="left"><img src="img/Step3.2.png" alt="Trojan" width="500" /></p>
-<p align="right"><img src="img/Step3.3.png" alt="Trojan" width="500" /></p>
+<p align="left"><img src="img/Step3.2.png" alt="Trojan" width="500" /></p><p align="right"><img src="img/Step3.3.png" alt="Trojan" width="500" /></p>
 
 4.STEP4: Travelling salesman problem
 
