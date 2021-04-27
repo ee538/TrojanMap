@@ -14,22 +14,7 @@ IV. Discussion, conclusion, and lessons learned.
 
 ## I. High-level overview of our design 
 
-This project builds a USC surroundings map application with using data structures in C++ and implementing various graph algorithms. The application has the following seven functionalities:
 <p align="center"><img src="img/TrojanMap.png" alt="Trojan" width="500" /></p>
-```shell
-**************************************************************
-* Select the function you want to execute.
-* 1. Autocomplete
-* 2. Find the position
-* 3. CalculateShortestPath
-* 4. Travelling salesman problem
-* 5. Cycle Detection
-* 6. Topological Sort
-* 7. Exit
-**************************************************************
-```
-
-When the user chooses the number from 1 to 7, the application codes will excuate the corresponding the function and help users to make further desicions.
 
 Each point on the map is represented by the class **Node** shown below and defined in [trojanmap.h](src/lib/trojanmap.h). These nodes are stored in the parameter 'data' in the container of 'map'.
 
@@ -45,6 +30,22 @@ class Node {
 };
 
 ```
+This project builds a USC surroundings map application with using data structures in C++ and implementing various graph algorithms. The application has the following seven functionalities:
+
+```shell
+**************************************************************
+* Select the function you want to execute.
+* 1. Autocomplete
+* 2. Find the position
+* 3. CalculateShortestPath
+* 4. Travelling salesman problem
+* 5. Cycle Detection
+* 6. Topological Sort
+* 7. Exit
+**************************************************************
+```
+
+When the user chooses the number from 1 to 7, the application codes will excuate the corresponding the function and help users to make further desicions.
 
 
 ## II. Detailed description of each function and its time complexity
@@ -161,9 +162,7 @@ We give a specific example and show the corresponding time spent below.
 <p align="center"><img src="img/Step1.1.png" alt="Trojan" width="500" /></p>
 <p align="center"><img src="img/Step1.2.png" alt="Trojan" width="500" /></p>
 <p align="center"><img src="img/Step1.3.png" alt="Trojan" width="500" /></p>
-```shell
 
-```
 2.STEP2: Find the position
 
 <p align="center"><img src="img/Step2.png" alt="Trojan" width="500" /></p>
