@@ -85,29 +85,33 @@ Dijkstra:
 * put all nodes' id into 'allNodes' vector
 * create a 2237×2237 matrix 'weight', and the value of each blank represents distance between a pair of nodes. If one node is not the neighbour of the other node, we set the distance infinity.
 * Get start and end node from point’s name;
-* Create a min heap using priority queue with pair of <dist,id>;
-* Use a map to save the shortest distance of each node;
-* Set each node’s distance as infinite except start node and set start node’s distance as 0;
-* Use another map to save the predecessor of each node in order to build the path lately;
-* Use bfs like while loop to update the shortest distance map and predecessor map;
-* Use predecessor map to build the entire shortest path.
-* Time complexity:
+* Then implement the algorithm same as what is told in the lecture.
+
+
+* Time compplexity: O(n^2)
 
 Bellman Ford:
 * input: 2 locations, one is start point and the other is destination; output: the shortest path which is a list of id
-*
-*
+* Also put all nodes'id into 'allNodes' vector and create a matrix to record the distance between two nodes.
+* Implementation of the algorithm is the same as lecture.
 
-* Time complexity:
+* Time complexity: O(n*m)
 ```
 
 4.STEP4: Travelling salesman problem
 ```shell
+* Brute force method:
+* Just Traverse all the possible paths and find the minimum one.
 * 
-* 
-* 
+* Time complexity: O(m+n+k)
 
-* Time complexity:
+*2-opt method:
+* First we initial a path as the minimum path.
+* Second we randomly exchange two nodes and compare with the intial path. If we exchange 5 times and the initial path
+* is still the minimum path. We think we get the good result.
+* If minimum path is changed during the exchange we will initial a new path as the minimum path and repeate the step 1 and 2.
+
+
 ```
 
 5.STEP5: Cycle Detection
@@ -148,10 +152,10 @@ We employ two methods.
 ```shell
 method 1:
 * input: a vector of location names ; output: nodes after topological sorting
-*
-*
+* use DFS to find the valid route.
 
-* Time complexity:
+
+* Time complexity:O(m+n)
 ```
 
 ```shell
