@@ -330,12 +330,12 @@ void TrojanMap::PrintMenu() {
     // Read dependencies from CSV file
     std::vector<std::vector<std::string>> dependencies;
     if (dependencies_filename == "")
-      dependencies = {{"Cardinal Gardens","Coffee Bean1"}, {"CVS","Cardinal Gardens"}, {"Coffee Bean1","CVS"}};
+      dependencies = {{"Cardinal Gardens","Coffee Bean1"}, {"Cardinal Gardens","CVS"}, {"Coffee Bean1","CVS"}};
     else
       dependencies = ReadDependenciesFromCSVFile(dependencies_filename);
 
-    // std::vector<std::string> location_names = {"Cardinal Gardens", "Coffee Bean1","CVS"};
-    // std::vector<std::vector<std::string>> dependencies = {{"Coffee Bean1","Cardinal Gardens"}, {"CVS","Cardinal Gardens"}, {"CVS","Coffee Bean1"}};
+     //std::vector<std::string> location_names = {"Cardinal Gardens", "Coffee Bean1","CVS"};
+     //std::vector<std::vector<std::string>> dependencies = {{"Coffee Bean1","Cardinal Gardens"}, {"CVS","Cardinal Gardens"}, {"CVS","Coffee Bean1"}};
     auto start = std::chrono::high_resolution_clock::now();
     auto result = DeliveringTrojan(location_names, dependencies);
     auto stop = std::chrono::high_resolution_clock::now();
@@ -1071,74 +1071,78 @@ std::vector<std::vector<std::string>> TrojanMap::ReadDependenciesFromCSVFile(std
  */
 
 /*********WAY 1*********/
-// void TrojanMap::topo(std::string root,std::map<std::string,int> &marks,std::vector<std::string> &top_list, std::map<std::string,std::vector<std::string>> &edge_map){
-//   marks[root]=1;
-//   std::vector<std::string> temp=edge_map[root];
-//   for(const std::string &child : temp)
-//   {
-//       if(marks[child]!=1)
-//       {
-//         topo(child,marks,top_list,edge_map);
-//       }
-//   }
-//   top_list.push_back(root);
+ void TrojanMap::topo(std::string root,std::map<std::string,int> &marks,std::vector<std::string> &top_list, std::map<std::string,std::vector<std::string>> &edge_map){
+   marks[root]=1;
+   std::vector<std::string> temp=edge_map[root];
+   for(const std::string &child : temp)
+   {
+       if(marks[child]!=1)
+       {
+         topo(child,marks,top_list,edge_map);
+       }
+   }
+   top_list.push_back(root);
 
-// }
+ }
 
-// std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &locations,
-//                                                      std::vector<std::vector<std::string>> &dependencies){
-//   std::vector<std::string> result;
+ std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &locations,
+                                                      std::vector<std::vector<std::string>> &dependencies){
+   std::vector<std::string> result;
   
   
-//   std::vector<std::string> root;
-//   int flag=1;
-//   for(auto location:locations)
-//   {
-//     for(auto x:dependencies)
-//     {
-//       if(location==x[1])
-//         flag=0;
-//     }
-//     if(flag==1)
-//       root.push_back(location);
+   std::vector<std::string> root;
+   int flag=1;
+   for(auto location:locations)
+   {
+     for(auto x:dependencies)
+     {
+       if(location==x[1])
+         flag=0;
+     }
+     if(flag==1)
+       root.push_back(location);
     
-//     flag=1;
-//   }
+     flag=1;
+   }
   
   
-//   if(root.size()!=1)
-//     return result;   
+   if(root.size()!=1)
+     return result;   
   
-//   std::string start_p=root[0];
+   std::string start_p=root[0];
   
-//   std::map<std::string,std::vector<std::string>> edge_map;
-//   for(auto location:locations)
-//   {
-//     for(auto x:dependencies)
-//     {
-//       if(location==x[0])
-//       {
-//         edge_map[location].push_back(x[1]);
-//       }
-//     }
-//   }
+   std::map<std::string,std::vector<std::string>> edge_map;
+   for(auto location:locations)
+   {
+     for(auto x:dependencies)
+     {
+       if(location==x[0])
+       {
+         edge_map[location].push_back(x[1]);
+       }
+     }
+   }
 
   
-//   std::map<std::string,int> marks;
-//   topo(start_p,marks,result,edge_map);
-//   std::reverse(result.begin(),result.end());
-//   if(result.size()==locations.size())
-//     return result;
-//   else{
-//     std::vector<std::string> temp;
-//     return temp;
-//   }
+   std::map<std::string,int> marks;
+   topo(start_p,marks,result,edge_map);
+   std::reverse(result.begin(),result.end());
+   if(result.size()==locations.size())
+     return result;
+   else{
+     std::vector<std::string> temp;
+     return temp;
+   }
 
-//   return result;
+   return result;
 
-// }
+ }
+
+ 
 
 /*********WAY 2*********/
+
+/*
 std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &locations,
                                                      std::vector<std::vector<std::string>> &dependencies){
 std::vector<std::string> result;
@@ -1171,7 +1175,7 @@ while(result.size() != locations.size()){
 }
 
 
-
+*/
 
 /**
  * Travelling salesman problem: Given a list of locations, return the shortest

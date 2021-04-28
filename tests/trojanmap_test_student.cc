@@ -390,24 +390,22 @@ TEST(TrojanMapTest, CycleDetection) {
 TEST(TrojanMapTest, TopologicalSort1) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
-  std::vector<std::string> location_names = {"Trojan Grounds Starbucks","Ralphs","CVS","ChickfilA","Trader Joe39s"};
-  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"Ralphs","CVS"}, {"ChickfilA","Trojan Grounds Starbucks"},
-                                                        {"CVS","Trojan Grounds Starbucks"},{"Trojan Grounds Starbucks","Trader Joe39s"}};
-  auto real = m.DeliveringTrojan(location_names, dependencies);
-  std::vector<std::string> exp ={"Ralphs", "CVS", "ChickfilA","Trojan Grounds Starbucks","Trader Joe39s"};
-  EXPECT_EQ(real, exp);
+  std::vector<std::string> location_names = {"Ralphs","CVS","ChickfilA"};
+  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"ChickfilA","CVS"},{"Ralphs","CVS"}};
+  auto result = m.DeliveringTrojan(location_names, dependencies);
+  std::vector<std::string> gt ={"Ralphs","ChickfilA","CVS"};
+  EXPECT_EQ(result, gt);
 }
 
 //dependencies2
 TEST(TrojanMapTest, TopologicalSort2) {
   TrojanMap m;
   m.CreateGraphFromCSVFile();
-  std::vector<std::string> location_names = {"Trojan Grounds Starbucks","Ralphs","CVS","ChickfilA","Trader Joe39s"};
-  std::vector<std::vector<std::string>> dependencies = {{"Ralphs","ChickfilA"}, {"Ralphs","Trader Joe39s"},
-                                                        {"Trojan Grounds Starbucks","CVS"},{"Trojan Grounds Starbucks","ChickfilA"}};
-  auto real = m.DeliveringTrojan(location_names, dependencies);
-  std::vector<std::string> exp ={"Trojan Grounds Starbucks", "Ralphs", "CVS", "ChickfilA", "Trader Joe39s"};
-  EXPECT_EQ(real, exp);
+  std::vector<std::string> location_names = {"Cardinal Gardens", "Coffee Bean1","CVS"};
+  std::vector<std::vector<std::string>> dependencies = {{"Cardinal Gardens","Coffee Bean1"}, {"Cardinal Gardens","CVS"}, {"Coffee Bean1","CVS"}};
+  auto result = m.DeliveringTrojan(location_names, dependencies);
+  std::vector<std::string> gt ={"Cardinal Gardens", "Coffee Bean1","CVS"};
+  EXPECT_EQ(result, gt);
 }
 
 // no topo sort
