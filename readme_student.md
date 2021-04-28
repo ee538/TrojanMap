@@ -197,7 +197,7 @@ Dijkstra is much more faster than Bellman-Ford method.
 
 <p align="center"><img src="img/Step4.png" alt="Trojan" width="500" /></p>
 
-2-opt heuristic method gets the same result with the Brute force method. 3-opt heuristic method doesn't get the optimal result and the difference is 0.2. Howeverm 2-opt heuristic and 3-opt heuristic are much more faster than the Brute force method.
+2-opt heuristic method gets the same result with the Brute force method. 3-opt heuristic method doesn't get the optimal result and the difference is 0.2. However, 2-opt heuristic and 3-opt heuristic are much more faster than the Brute force method.
 
 5.STEP5: Cycle Detection
 
