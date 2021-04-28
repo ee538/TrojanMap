@@ -474,3 +474,4 @@ Your README file should include two sections:
    $ bazel run --cxxopt='-std=c++17' src/main:main
    ```
 
+We write the report in readme_student.md(same directory)

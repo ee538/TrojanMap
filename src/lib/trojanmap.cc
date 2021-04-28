@@ -330,7 +330,7 @@ void TrojanMap::PrintMenu() {
     // Read dependencies from CSV file
     std::vector<std::vector<std::string>> dependencies;
     if (dependencies_filename == "")
-      dependencies = {{"Cardinal Gardens","Coffee Bean1"}, {"Cardinal Gardens","CVS"}, {"Coffee Bean1","CVS"}};
+      dependencies = {{"Cardinal Gardens","Coffee Bean1"}, {"CVS","Cardinal Gardens"}, {"Coffee Bean1","CVS"}};
     else
       dependencies = ReadDependenciesFromCSVFile(dependencies_filename);
 
@@ -342,6 +342,10 @@ void TrojanMap::PrintMenu() {
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     menu = "*************************Results******************************";
     std::cout << menu << std::endl;
+    if(result.size()==0){
+      std::cout<< "there is no feasible route" << std::endl;
+    }
+    else{
     std::cout << "Topological Sorting Reults:" << std::endl;
     for (auto x : result) std::cout << x << std::endl;
     std::vector<std::string> node_ids;
@@ -353,6 +357,7 @@ void TrojanMap::PrintMenu() {
     menu = "**************************************************************\n";
     std::cout << menu;
     std::cout << "Time taken by function: " << duration.count() << " microseconds" << std::endl << std::endl;
+    }
     PrintMenu();
     break;
   }
