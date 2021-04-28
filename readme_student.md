@@ -191,13 +191,13 @@ We give a specific example and show the corresponding time spent by function bel
        <td><p align="right"><img src="img/Step3.3.png" alt="Trojan" width="500" /></p></td>
    </tr></table>
 
-Dijkstra is much more faster than Bellmon-Ford method.
+Dijkstra is much more faster than Bellman-Ford method.
 
 4.STEP4: Travelling salesman problem
 
 <p align="center"><img src="img/Step4.png" alt="Trojan" width="500" /></p>
 
-2-opt heuristic method gets the same result with the Brute force method. 3-opt heuristic method doesn't get the optimal result and the difference is . Howeverm 2-opt heuristic and 3-opt heuristic are much more faster than the Brute force method.
+2-opt heuristic method gets the same result with the Brute force method. 3-opt heuristic method doesn't get the optimal result and the difference is 0.2. Howeverm 2-opt heuristic and 3-opt heuristic are much more faster than the Brute force method.
 
 5.STEP5: Cycle Detection
 
