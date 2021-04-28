@@ -88,7 +88,7 @@ Dijkstra:
 * Then implement the algorithm same as what is told in the lecture.
 
 
-* Time compplexity: O(n^2)
+* Time complexity: O(n^2)
 
 Bellman Ford:
 * input: 2 locations, one is start point and the other is destination; output: the shortest path which is a list of id
@@ -111,6 +111,8 @@ Bellman Ford:
 * is still the minimum path. We think we get the good result.
 * If minimum path is changed during the exchange we will initial a new path as the minimum path and repeate the step 1 and 2.
 
+
+* Time complexity: O(m+n+k)
 
 ```
 
