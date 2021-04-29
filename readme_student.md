@@ -100,6 +100,10 @@ Bellman Ford:
 
 4.STEP4: Travelling salesman problem
 ```shell
+* We finish this problem using three methods. In all the three methods we will
+* use function Permute_aux to find all the possible route.
+
+
 * Brute force method:
 * Just Traverse all the possible paths and find the minimum one.
 * 
@@ -109,7 +113,42 @@ Bellman Ford:
 * First we initial a path as the minimum path.
 * Second we randomly exchange two nodes and compare with the intial path. If we exchange 5 times and the initial path
 * is still the minimum path. We think we get the good result.
-* If minimum path is changed during the exchange we will initial a new path as the minimum path and repeate the step 1 and 2.
+* If minimum path is changed during the exchange we will initial a new path as the minimum path and repeate the step 1 and 2. 
+* We use swap_2Cal function to exchange two nodes.
+
+void TrojanMap::swap_2Cal(std::vector<std::string> &init_path,int &counter,double &min_len,
+std::vector<std::vector<std::string>> &results){
+  results.push_back(init_path);
+  for(int m=1;m<init_path.size()-2;m++)
+  {
+    for(int n=m+1;n<init_path.size()-1;n++){
+      
+        std::vector<std::string> swap_path=init_path;
+        std::string temp_node=init_path[m];
+        swap_path[m]=swap_path[n];
+        swap_path[n]=temp_node;
+        double temp_route=0;
+        for(int j=0;j<swap_path.size()-1;j++)
+        {
+          temp_route += CalculateDistance(data[swap_path[j]],data[swap_path[j+1]]);
+        }
+        if(temp_route<min_len)
+        {
+          counter=0;
+          min_len=temp_route;
+          init_path=swap_path;
+          return;
+        }
+        else{
+          counter++;
+        }
+        if(counter==5)
+          return;
+
+    }
+  }
+  
+}
 
 
 * Time complexity: O(m+n+k)
@@ -120,7 +159,71 @@ It is similar with 2-opt. Instead of exchange 2 nodes we exchange three nodes at
 * In the TravellingTrojan_3opt funciton we will call the swap_3Cal function if we change 5 times and the path is still the minimum
 * we think we get the optimal result.
 
-<p align="center"><img src="img/1.jpg" alt="Trojan" width="500" /></p>
+void TrojanMap::swap_3Cal(std::vector<std::string> &init_path,int &counter,double &min_len,
+std::vector<std::vector<std::string>> &results){
+            results.push_back(init_path);
+            for(int m=1;m<init_path.size()-3;m++)
+            {
+              for(int n=m+1;n<init_path.size()-2;n++)
+              {
+                for(int p=n+1;p<init_path.size()-1;p++)
+                {
+                    std::vector<std::string> swap1_path=init_path;
+                    std::string node_m=swap1_path[m];
+                    std::string node_n=swap1_path[n];
+                    std::string node_p=swap1_path[p];
+                    swap1_path[n]=node_m;
+                    swap1_path[p]=node_n;
+                    swap1_path[m]=node_p;
+                    double temp_route=0;
+                    for(int j=0;j<swap1_path.size()-1;j++)
+                      {
+                          temp_route += CalculateDistance(data[swap1_path[j]],data[swap1_path[j+1]]);
+                      }
+                    
+                    if(temp_route>min_len)
+                    {
+                      counter++;
+                      if(counter==5)
+                          return;
+                      
+                    }
+                    else{
+                      min_len=temp_route;
+                      counter=0;
+                      init_path=swap1_path;
+                      return;
+                    }
+                    swap1_path=init_path;
+                     node_m=swap1_path[m];
+                     node_n=swap1_path[n];
+                     node_p=swap1_path[p];
+                    swap1_path[m]=node_n;
+                    swap1_path[n]=node_p;
+                    swap1_path[p]=node_m;
+                    temp_route=0;
+                    for(int j=0;j<swap1_path.size()-1;j++)
+                      {
+                          temp_route += CalculateDistance(data[swap1_path[j]],data[swap1_path[j+1]]);
+                      }
+                    
+                    if(temp_route>min_len)
+                    {
+                      counter++;
+                      if(counter==5)
+                          return;
+                      
+                    }
+                    else{
+                      min_len=temp_route;
+                      counter=0;
+                      init_path=swap1_path;
+                      return;
+                    }
+                }
+              }
+            }
+}
 
 ```
 
@@ -162,9 +265,25 @@ We employ two methods.
 ```shell
 method 1:
 * input: a vector of location names ; output: nodes after topological sorting
-* use DFS to find the valid route.
+* use DFS to find the valid route. 
+* We use topo function to do the process of toplogical sort.
+void TrojanMap::topo(std::string root,std::map<std::string,int> &marks,std::vector<std::string> &top_list, std::map<std::string,std::vector<std::string>> &edge_map){
+   marks[root]=1;
+   std::vector<std::string> temp=edge_map[root];
+   for(const std::string &child : temp)
+   {
+       if(marks[child]!=1)
+       {
+         topo(child,marks,top_list,edge_map);
+       }
+   }
+   top_list.push_back(root);
 
-
+ }
+ 
+* In the function std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &locations,
+                                                      std::vector<std::vector<std::string>> &dependencies) we will call the topo function.
+ 
 * Time complexity:O(m+n)
 ```
 
