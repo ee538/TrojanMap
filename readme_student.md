@@ -116,8 +116,11 @@ Bellman Ford:
 
 *3-opt method:
 It is similar with 2-opt. Instead of exchange 2 nodes we exchange three nodes at a time and do the same process of 2-opt.
+*we use swap_3Cal function to do the process of exchanging three nodes. use TravellingTrojan_3opt to complete the 3-opt algorothm. 
+* In the TravellingTrojan_3opt funciton we will call the swap_3Cal function if we change 5 times and the path is still the minimum
+* we think we get the optimal result.
 
-<p align="center"><img src="img/1.png" alt="Trojan" width="500" /></p>
+<p align="center"><img src="img/1.jpg" alt="Trojan" width="500" /></p>
 
 ```
 
