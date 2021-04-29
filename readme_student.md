@@ -114,6 +114,11 @@ Bellman Ford:
 
 * Time complexity: O(m+n+k)
 
+*3-opt method:
+It is similar with 2-opt. Instead of exchange 2 nodes we exchange three nodes at a time and do the same process of 2-opt.
+
+
+
 ```
 
 5.STEP5: Cycle Detection
